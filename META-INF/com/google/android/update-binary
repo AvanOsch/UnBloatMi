@@ -1,5 +1,5 @@
 #!/sbin/sh
-# UnBloatMi v0.1 - Xiaomi MIUI 8 Bloatware remover
+# UnBloatMi v0.2 - Xiaomi MIUI 8 Bloatware remover
 # By AvanOsch, with thanks to osm0sis @ xda-developers who wrote:
 # Shell Script EDIFY Replacement: Recovery Flashable Zip
 
@@ -386,11 +386,34 @@ backup_files() {
 		done;
 	done;
 }
-# restore_files
+RESTORED=0;
+NORESTOR=0;
+# restore_choose <timeout> <file>
+restore_choose() {
+	ui_print "Restore file (vol+), or not (vol-)?";
+	ui_print "You have $1 seconds to choose";
+	time=$1;
+	key=42;					# vol+
+	timeout -t $time /tmp/unbloatmi/keycheck;
+	if [[ $? -eq $key ]]; then
+		mv -f $BACKUPLOC$file $(dirname $file);
+		if [ -e $file ]; then
+			ui_print "Restored $file";
+			RESTORED=$(( $RESTORED + 1 ));
+		else
+			ui_print "Failed restoring $file";
+			failed=1;
+		fi;
+	else
+		NORESTOR=1;
+	fi;
+}
+# restore_files [<confirm>]
+# If confirm is set, asks for confirmation for all apps
 restore_files() {
 	ui_print "Restoring files...";
-	RESTORED=0;
 	progress=$FILESTEP;
+	confirm=${1:-0};
 	failed=0;
 	fil=FILES;
 	cmt=COMNT;
@@ -408,13 +431,20 @@ restore_files() {
 			if [ ${file:-0} == 0 ]; then
 				break;
 			elif [ -e $BACKUPLOC$file ]; then
-				mv -f $BACKUPLOC$file $(dirname $file);
-				if [ -e $file ]; then
-					ui_print "Restored $file";
-					RESTORED=$(( $RESTORED + 1 ));
+				if [ $confirm -ne 0 ]; then
+					ui_print "______________________________________________________";
+					ui_print "Restore $file?";
+					restore_choose 10 $file;
+					ui_print "______________________________________________________";
 				else
-					ui_print "Failed restoring $file";
-					failed=1;
+					mv -f $BACKUPLOC$file $(dirname $file);
+					if [ -e $file ]; then
+						ui_print "Restored $file";
+						RESTORED=$(( $RESTORED + 1 ));
+					else
+						ui_print "Failed restoring $file";
+						failed=1;
+					fi;
 				fi;
 			fi;
 			set_progress $progress;
@@ -428,9 +458,22 @@ restore_files() {
 		ui_print "Find them in $BACKUPLOC";
 		ui_print "and try to restore them manually";
 	else
-		delete_recursive $BACKUPLOC;
-		ui_print "Restored all $RESTORED files!";
+		if [ $NORESTOR -ne 0 ]; then
+			ui_print "Restored $RESTORED files!";
+			ui_print "Some files were not restored...";
+		else
+			delete_recursive $BACKUPLOC;
+			ui_print "Restored all $RESTORED files!";
+		fi;
 	fi;
+}
+#restore_menu
+restore_menu() {
+	ui_print "____________________________________________________";
+	ui_print "|  Do you want to Restore ALL backups (Volume Up)  |";
+	ui_print "|     or Restore them one by one (Volume Down)     |";
+	ui_print "|__________________________________________________|";
+	choose 30 "restore_files" "restore_files 1" "+";
 }
 # delete_backups
 delete_backups() {
@@ -480,7 +523,7 @@ if [ -d "$BACKUPLOC" ]; then
 	ui_print "|  Do you want to Restore the backups (Volume Up)  |";
 	ui_print "|     or Delete all the backups (Volume Down)      |";
 	ui_print "|__________________________________________________|";
-	choose 30 "restore_files" "delete_backups" "+";
+	choose 30 "restore_menu" "delete_backups" "+";
 else
 	set_progress 5;
 	ui_print "______________________________________________________";
