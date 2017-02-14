@@ -10,7 +10,7 @@ BACKUP YOUR DEVICE BEFORE RUNNING THIS SCRIPT!!! (I recommend using TWRP Backup)
 
 Usage:
 - Move the ZIP file to your SDCard, and install using TWRP Recovery<br/>
-- The first run, you'll be asked what apps to remove. Backups are automatically made<br/>
+- The first run, you'll be asked what apps to remove. Backups are automatically made.<br/>
 You can confirm each app, or choose to only confirm the more risky apps.<br/>
 - If you run the script again (after testing your installation), it will detect the backups from the previous run.<br/>
 You can then choose to restore the backup files, or delete them from your device.<br/>
