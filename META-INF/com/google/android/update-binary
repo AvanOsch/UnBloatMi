@@ -186,6 +186,7 @@ PRVFILES22="/system/priv-app/Music";
 	PRVCOMNT22="Music App - Better ones Available";
 PRVFILES23="/system/priv-app/PersonalAssistant";
 PRVFILES24="/system/priv-app/SecurityCenter";
+	PRVCOMNT24="WARNING! Could cause bootloop after removing!";
 PRVFILES25="/system/priv-app/SetupWizard";
 PRVFILES26="/system/priv-app/SpacesManagerService";
 PRVFILES27="/system/priv-app/SpacesTrustAgent";
