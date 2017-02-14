@@ -1,0 +1,536 @@
+#!/sbin/sh
+# UnBloatMi v0.1 - Xiaomi MIUI 8 Bloatware remover
+# By AvanOsch, with thanks to osm0sis @ xda-developers who wrote:
+# Shell Script EDIFY Replacement: Recovery Flashable Zip
+
+# Location to save the file backups
+BACKUPLOC=/sdcard/UnBloatMi;
+
+# Add any new bloatware files/directories below.
+# To keep things ordered, add them to the proper list, and in alphabetical order.
+# Each line should have FILES<number>="/dir/to/file/location";
+# Optionally, you can add COMNT<number>="Comment about file, or empty"; (with matching <number> of course)
+# The file number doesn't have to be in order, but should be unique.
+# If the Comment starts with "WARN", "INFO" or "NOTE", the user will get a choice to skip the file.
+
+# /system/app
+APPFILES0="/system/app/AGPSTestMode";
+APPFILES1="/system/app/AMAPNetworkLocation";
+APPFILES2="/system/app/AnalyticsCore";
+	APPCOMNT2="Can be removed or you can disable the WakeupService.";
+APPFILES3="/system/app/AntHalService";
+	APPCOMNT3="Needed for Fitness Accessories";
+APPFILES4="/system/app/AntiSpam";
+	APPCOMNT4="Block messages and Phone calls";
+APPFILES5="/system/app/AntiTheftDemo";
+APPFILES6="/system/app/AppIndexProvider";
+	APPCOMNT6="NOTE: Could disable settings search.";
+APPFILES7="/system/app/ApplicationsProvider";
+	APPCOMNT7="NOTE: Could disable settings search. Fetches list of applications to provide search suggestions";
+APPFILES8="/system/app/BackupReceiver";
+APPFILES9="/system/app/BasicDreams";
+	APPCOMNT9="Daydream - not used by MIUI";
+APPFILES10="/system/app/BatteryGuruSystemApp";
+	APPCOMNT10="SnapDragon Battery Saver app";
+APPFILES11="/system/app/BookmarkProvider";
+APPFILES12="/system/app/BTTestApp";
+APPFILES13="/system/app/BugReport";
+	APPCOMNT13="WARNING! You can't view summary if an App stops unexpectedly";
+APPFILES14="/system/app/Calculator";
+	APPCOMNT14="Use a better calculator instead";
+APPFILES15="/system/app/CalendarWidget";
+	APPCOMNT15="Widget for calendar app";
+APPFILES16="/system/app/Chrome";
+	APPCOMNT16="Google Chrome - This doesn't need to be a system App";
+APPFILES17="/system/app/Cit";
+APPFILES18="/system/app/CloudService";
+	APPCOMNT18="Mi Cloud";
+APPFILES19="/system/app/Drive";
+	APPCOMNT19="Google Drive - This doesn't need to be a system App";
+APPFILES20="/system/app/Email";
+	APPCOMNT20="Use GMail, or a proper Email App";
+APPFILES21="/system/app/FileExplorer";
+	APPCOMNT21="Use a decent explorer instead";
+APPFILES22="/system/app/Galaxy4";
+	APPCOMNT22="Black Hole - Live wallpaper";
+APPFILES23="/system/app/GameCenter";
+APPFILES24="/system/app/Gmail2";
+	APPCOMNT24="This doesn't need to be a system App";
+APPFILES25="/system/app/Hangouts";
+	APPCOMNT25="Google Hangouts - Messaging app";
+APPFILES26="/system/app/HiddTestApp";
+APPFILES27="/system/app/HoloSpiralWallpaper";
+	APPCOMNT27="Holo Spiral - Live wallpaper";
+APPFILES28="/system/app/HTMLViewer";
+APPFILES29="/system/app/jjcontainer";
+APPFILES30="/system/app/jjhome";
+APPFILES31="/system/app/jjknowledge";
+APPFILES32="/system/app/jjstore";
+APPFILES33="/system/app/KeyChain";
+APPFILES34="/system/app/KingSoftCleaner";
+APPFILES35="/system/app/KSICibaEngine";
+APPFILES36="/system/app/LatinImeGoogle";
+APPFILES37="/system/app/LiveWallpapers";
+	APPCOMNT37="NOTE! Needed if you want to use Live Wallpapers???";
+APPFILES38="/system/app/LiveWallpapersPicker";
+	APPCOMNT38="NOTE! Needed if you want to use Live Wallpapers???";
+APPFILES39="/system/app/LunarInfoProvider";
+APPFILES40="/system/app/mab";
+APPFILES41="/system/app/MagicSmokeWallpapers";
+	APPCOMNT41="Magic Smoke - Live wallpaper";
+APPFILES42="/system/app/Metok";
+APPFILES43="/system/app/MiDiscover";
+	APPCOMNT43="Purpose Unknown";
+APPFILES44="/system/app/MiDrive";
+APPFILES45="/system/app/MiLinkService";
+	APPCOMNT45="Uniplay Service - Streaming. Maybe also Wi-Fi Display Connection?";
+APPFILES46="/system/app/MiLivetalk";
+APPFILES47="/system/app/Mipay";
+	APPCOMNT47="Mi Pay - Xiaomi Mobile payments (China only?)";
+APPFILES48="/system/app/MiPicks";
+APPFILES49="/system/app/MiPlay";
+APPFILES50="/system/app/MiuiCompass";
+	APPCOMNT50="Compass";
+APPFILES51="/system/app/MiuiScanner";
+	APPCOMNT51="Barcode scanner";
+APPFILES52="/system/app/MiuiVideo";
+APPFILES53="/system/app/MiWallpaper";
+APPFILES54="/system/app/ModemTestMode";
+APPFILES55="/system/app/Music2";
+	APPCOMNT55="Google Play Music";
+APPFILES56="/system/app/NetworkAssistant2";
+APPFILES57="/system/app/NFCtestSvc";
+APPFILES58="/system/app/NoiseField";
+	APPCOMNT58="Noise Field - Live wallpaper";
+APPFILES59="/system/app/Notes";
+	APPCOMNT59="Notes App";
+APPFILES60="/system/app/PartnerBookmarksProvider";
+APPFILES61="/system/app/PaymentService";
+	APPCOMNT61="MiWallet";
+APPFILES62="/system/app/PersonalAssistantPlugin";
+APPFILES63="/system/app/PhaseBeam";
+	APPCOMNT63="Phase Beam - Live wallpaper";
+APPFILES64="/system/app/Photos";
+	APPCOMNT64="Photo App";
+APPFILES65="/system/app/PhotoTable";
+	APPCOMNT65="Photo Screensavers";
+APPFILES66="/system/app/PicoTts";
+	APPCOMNT66="TextToSpeech - Use Google TTS";
+APPFILES67="/system/app/PowerKeeper";
+	APPCOMNT67="Battery Saver";
+APPFILES68="/system/app/SecurityAdd";
+	APPCOMNT68="Security Service Plugin";
+APPFILES69="/system/app/SecurityCoreAdd";
+	APPCOMNT69="WARNING! Don't remove if you have Second Space/Dual Apps feature";
+APPFILES70="/system/app/SmsRegister";
+APPFILES71="/system/app/SmsLteRegister";
+APPFILES72="/system/app/SogouInput";
+APPFILES73="/system/app/SoundRecorder";
+	APPCOMNT73="Recorder App";
+APPFILES74="/system/app/SpacesCore";
+APPFILES75="/system/app/SpacesPolicyApp";
+APPFILES76="/system/app/Stk";
+	APPCOMNT76="Sim Toolkit";
+APPFILES77="/system/app/SystemAdSolution";
+APPFILES78="/system/app/SystemBaseFunctions";
+APPFILES79="/system/app/talkback";
+APPFILES80="/system/app/TranslationService";
+APPFILES81="/system/app/UserDictionaryProvider";
+APPFILES82="/system/app/Videos";
+	APPCOMNT82="Use a better Video app";
+APPFILES83="/system/app/VisualizationWallpapers";
+APPFILES84="/system/app/VoiceAssist";
+APPFILES85="/system/app/WAPPushManager";
+APPFILES86="/system/app/WfdService";
+APPFILES87="/system/app/Whetstone";
+APPFILES88="/system/app/XiaomiAccount";
+	APPCOMNT88="WARNING! DO NOT REMOVE! Has to be re-installed before resetting!";
+APPFILES88="/system/app/XiaomiServiceFramework";
+	APPCOMNT88="WARNING! DO NOT REMOVE! Phone App gets stuck in crash-loop!";
+APPFILES89="/system/app/XiaomiVip";
+APPFILES90="/system/app/XMPass";
+
+# system/priv-app
+PRVFILES0="/system/priv-app/AutoTest";
+PRVFILES1="/system/priv-app/BackupRestoreConfirmation";
+PRVFILES2="/system/priv-app/Calendar";
+	PRVCOMNT2="Use a better calendar";
+PRVFILES3="/system/priv-app/CalendarProvider";
+	PRVCOMNT3="NOTE! Needed for other Calendar Apps???";
+PRVFILES4="/system/priv-app/CallLogBackup";
+PRVFILES5="/system/priv-app/CellBroadcastReceiver";
+PRVFILES6="/system/priv-app/cit";
+PRVFILES7="/system/priv-app/CleanMaster";
+PRVFILES8="/system/priv-app/CloudBackup";
+	PRVCOMNT8="For backups to Mi Account";
+PRVFILES9="/system/priv-app/ConfigUpdater";
+PRVFILES10="/system/priv-app/FindDevice";
+	PRVCOMNT10="WARNING! DO NOT REMOVE! Has to be re-installed before resetting!";
+PRVFILES11="/system/priv-app/FM_TEST";
+PRVFILES12="/system/priv-app/GoogleBackupTransport";
+PRVFILES13="/system/priv-app/GoogleFeedback";
+PRVFILES14="/system/priv-app/GoogleOneTimeInitializer";
+PRVFILES15="/system/priv-app/GooglePartnerSetup";
+PRVFILES16="/system/priv-app/MiDrop";
+	PRVCOMNT16="Mi Drop App";
+PRVFILES17="/system/priv-app/MiGameCenterSDKService";
+PRVFILES18="/system/priv-app/Mipub";
+	PRVCOMNT18="Purpose unknown";
+PRVFILES19="/system/priv-app/MiuiGallery";
+	PRVCOMNT19="";
+PRVFILES20="/system/priv-app/MiuiHome";
+	PRVCOMNT20="WARNING! Don't remove if you have not installed another Launcher App! NovaLauncher provided by default.";
+PRVFILES21="/system/priv-app/MiuiVoip";
+	PRVCOMNT21="VOIP Calling";
+PRVFILES22="/system/priv-app/Music";
+	PRVCOMNT22="Music App - Better ones Available";
+PRVFILES23="/system/priv-app/PersonalAssistant";
+PRVFILES24="/system/priv-app/SecurityCenter";
+PRVFILES25="/system/priv-app/SetupWizard";
+PRVFILES26="/system/priv-app/SpacesManagerService";
+PRVFILES27="/system/priv-app/SpacesTrustAgent";
+PRVFILES28="/system/priv-app/Tag";
+PRVFILES29="/system/priv-app/Velvet";
+PRVFILES30="/system/priv-app/VirtualSim";
+PRVFILES31="/system/priv-app/WallpaperCropper";
+PRVFILES32="/system/priv-app/Weather";
+	PRVCOMNT32="NOTE: Might cause Notification area weather to fail";
+PRVFILES33="/system/priv-app/WeatherProvider";
+	PRVCOMNT33="NOTE: Might cause Notification area weather to fail";
+PRVFILES34="/system/priv-app/YellowPage";
+	PRVCOMNT34="WARNING! Said to cause problems with Contacts and Dialer (haven't had problems myself)";
+
+# data/app
+DATFILES0="/data/app/com.google.android.inputmethod.pinyin-1";
+DATFILES1="/data/app/com.mfashiongallery.emag-1";
+DATFILES2="/data/app/com.miui.enbbs-1";
+DATFILES3="/data/app/com.teslacoilsw.launcher-1";
+	DATCOMNT3="NOTE! Nova Launcher - Remove if you're installing on system!";
+DATFILES4="/data/app/klobugreport";
+DATFILES5="/data/app/Music";
+DATFILES6="/data/app/ota-miui-MiuiForum";
+	DATCOMNT6="NOTE! Needed for OTA updates???";
+DATFILES7="/data/app/ota-miui-XiaomiSmartHome";
+	DATCOMNT7="NOTE! Needed for OTA updates???";
+DATFILES8="/data/app/partner-BaiduIME";
+DATFILES9="/data/app/partner-BaiduMap";
+DATFILES10="/data/app/partner-com.duokan.reader";
+DATFILES11="/data/app/partner-MiShop";
+DATFILES12="/data/app/partner-MiTalk";
+DATFILES13="/data/app/partner-XiMaLaYa";
+DATFILES14="/data/app/partner-XunfeiSpeechService3";
+DATFILES15="/data/app/partner-Zixun";
+DATFILES16="/data/app/recommended-3rd-com.Qunar";
+
+# any other files
+VARFILES0="/system/data-app";
+	VARCOMNT0="Entire directory";
+VARFILES1="/system/etc/WhetstonePermission";
+VARFILES2="/system/lib64/libjni_latinimegoogle.so";													# various other file comments
+VARFILES3="/system/lib64/libjni_keyboarddecoder.so";
+VARFILES4="/system/tts/lang_pico";
+	VARCOMNT4="TTS - Entire directory";
+VARFILES5="/cust/app/customized";
+	VARCOMNT5="Entire directory";
+
+#######################################################
+##         NOTHING TO EDIT BELOW THIS POINT!         ##
+#######################################################
+
+FILENUM=0;
+FILECNT=0;
+# Getting number of files. Presumes APPFILES to be longest list, and shorter than 200
+i=0;
+while [ $i -lt 200 ]; do
+	if [ $(eval echo \${APPFILES${i}:-0}) != 0 ]; then
+		FILENUM=$(( $FILENUM + 1 ));
+		if [ -e $(eval echo \$APPFILES${i}) ]; then FILECNT=$(( $FILECNT + 1 )); fi;
+	else
+		break;
+	fi;
+	if [ $(eval echo \${PRVFILES${i}:-0}) != 0 ]; then
+		FILENUM=$(( $FILENUM + 1 ));
+		if [ -e $(eval echo \$PRVFILES${i}) ]; then FILECNT=$(( $FILECNT + 1 )); fi;
+	fi;
+	if [ $(eval echo \${DATFILES${i}:-0}) != 0 ]; then
+		FILENUM=$(( $FILENUM + 1 ));
+		if [ -e $(eval echo \$DATFILES${i}) ]; then FILECNT=$(( $FILECNT + 1 )); fi;
+	fi;
+	if [ $(eval echo \${VARFILES${i}:-0}) != 0 ]; then
+		FILENUM=$(( $FILENUM + 1 ));
+		if [ -e $(eval echo \$VARFILES${i}) ]; then FILECNT=$(( $FILECNT + 1 )); fi;
+	fi;
+	i=$(( $i + 1 ));
+done;
+FILESTEP=$(echo "100 $FILENUM / p" | dc);
+
+OUTFD=/proc/self/fd/$2;
+ZIPFILE="$3";
+DIR=$(dirname "$ZIPFILE");
+
+# ui_print "<message>" ["<message 2>" ...]
+ui_print() {
+	until [ ! "$1" ]; do
+		echo -e "ui_print $1\nui_print" >> $OUTFD;
+		shift;
+	done;
+}
+# show_progress <amount> <time>
+show_progress() {
+	amount=$(echo "0.0134 $1 * p" | dc);
+	echo "progress $amount $2" >> $OUTFD;
+}
+# set_progress <amount>
+set_progress() {
+	amount=$(echo "0.0134 $1 * p" | dc);
+	echo "set_progress $amount" >> $OUTFD;
+}
+
+# package_extract_file <file> <destination_file>
+package_extract_file() { unzip -o "$ZIPFILE" "$1" -p > "$2"; }
+# package_extract_dir <dir> <destination_dir>
+package_extract_dir() { unzip -o "$ZIPFILE" "$1/*" -d "$2"; }
+
+# delete_recursive <dir> [<dir2> ...]
+delete_recursive() { rm -rf $*; }
+
+# choose <timeout> <command1> <command2> [<default>]
+# <command1> will be run if <timeout> runs out
+# If no <default> is provided ("-" or "+") vol- is the default
+choose () {
+	ui_print "You have $1 seconds to press vol+/-";
+	time=$1;
+	cmd1=$2;
+	cmd2=$3;
+	key=42;					# vol+
+	if [ ${4:-0} = "+" ]; then
+		key=21;				# vol-
+		shift;
+	fi;
+	timeout -t $time /tmp/unbloatmi/keycheck;
+	if [[ $? -eq $key ]]; then
+		$cmd2;
+	else
+		$cmd1;
+	fi;
+}
+
+# backup_choose <timeout> <file>
+backup_choose() {
+	ui_print "Remove file (vol+), or keep it (vol-)?";
+	ui_print "You have $1 seconds to choose";
+	time=$1;
+	key=42;					# vol+
+	timeout -t $time /tmp/unbloatmi/keycheck;
+	if [[ $? -eq $key ]]; then
+		mv -f $file $(dirname $BACKUPLOC$file);
+		if [ -e $BACKUPLOC$file ]; then
+			ui_print "$file moved!";
+			BACKED=$(( $BACKED + 1 ));
+		else
+			ui_print "FAIL: $file!";
+		fi;
+	fi;
+}
+# backup_files [<confirm>]
+# If confirm is set, asks for confirmation for ALL apps
+backup_files() {
+	ui_print "Moving Bloatware to $BACKUPLOC...";
+	BACKED=0;
+	FILESTEP=$(echo "90 $FILENUM / p" | dc);	# Adjust FILESTEP to current progress
+	progress=$(echo "$FILESTEP 10 + p" | dc);	# Add 10 to progress
+	confirm=${1:-0};
+	fil=FILES;
+	cmt=COMNT;
+	h=0;
+	while [ $h -lt 4 ]; do
+		typ=APP;
+		if [ $h -eq 1 ]; then typ=PRV;
+		elif [ $h -eq 2 ]; then typ=DAT;
+		elif [ $h -eq 3 ]; then typ=VAR;
+		fi;
+		h=$(( $h + 1 ));
+		i=0;
+		while [ $i -le $FILENUM ]; do
+			file=$(eval echo \$$typ$fil${i});
+			cmnt=$(eval echo \$$typ$cmt${i});
+			if [ ${file:-0} == 0 ]; then
+				break;
+			elif [ -e $file ]; then
+				ui_print " ";
+				ask=0;
+				if [ "$cmnt" != "" ]; then
+					ui_print "$(basename $file): $cmnt";
+					ask="${cmnt:0:4}";
+					if [ $ask = "WARN" -o $ask = "NOTE" -o $ask = "INFO" ]; then ask=1;
+					else ask=0; fi;
+				else
+					ui_print "$(basename $file)";
+				fi;
+				if [ $confirm -ne 0 ]; then ask=1; fi;
+				if [ $ask -eq 1 ]; then
+					ui_print "______________________________________________________";
+					backup_choose 10 $file;
+					ui_print "______________________________________________________";
+				else
+					mv -f $file $(dirname $BACKUPLOC$file);
+					if [ -e $BACKUPLOC$file ]; then
+						ui_print "$file moved!";
+						BACKED=$(( $BACKED + 1 ));
+					else
+						ui_print "FAIL: $file!";
+					fi;
+				fi;
+			fi;
+			set_progress $progress;
+			progress=$(echo "$progress $FILESTEP + p" | dc);
+			i=$(( $i + 1 ));
+		done;
+	done;
+}
+# restore_files
+restore_files() {
+	ui_print "Restoring files...";
+	RESTORED=0;
+	progress=$FILESTEP;
+	failed=0;
+	fil=FILES;
+	cmt=COMNT;
+	h=0;
+	while [ $h -lt 4 ]; do
+		typ=APP;
+		if [ $h -eq 1 ]; then typ=PRV;
+		elif [ $h -eq 2 ]; then typ=DAT;
+		elif [ $h -eq 3 ]; then typ=VAR;
+		fi;
+		h=$(( $h + 1 ));
+		i=0;
+		while [ $i -le $FILENUM ]; do
+			file=$(eval echo \$$typ$fil${i});
+			if [ ${file:-0} == 0 ]; then
+				break;
+			elif [ -e $BACKUPLOC$file ]; then
+				mv -f $BACKUPLOC$file $(dirname $file);
+				if [ -e $file ]; then
+					ui_print "Restored $file";
+					RESTORED=$(( $RESTORED + 1 ));
+				else
+					ui_print "Failed restoring $file";
+					failed=1;
+				fi;
+			fi;
+			set_progress $progress;
+			progress=$(echo "$progress $FILESTEP + p" | dc);
+			i=$(( $i + 1 ));
+		done;
+	done;
+	if [ $failed -eq 1 ]; then
+		ui_print "Restored $RESTORED files.";
+		ui_print "Some files could not be restored!";
+		ui_print "Find them in $BACKUPLOC";
+		ui_print "and try to restore them manually";
+	else
+		delete_recursive $BACKUPLOC;
+		ui_print "Restored all $RESTORED files!";
+	fi;
+}
+# delete_backups
+delete_backups() {
+	show_progress 100 10;
+	ui_print "Deleting all files from $BACKUPLOC...";
+	delete_recursive $BACKUPLOC;
+	if [ -d $BACKUPLOC ]; then
+		ui_print "Error deleting Backup files!";
+	else
+		ui_print "Backup files deleted!";
+	fi;
+}
+
+#######################################################
+##              UnBloatMi Script Start               ##
+#######################################################
+
+show_progress 1 0;
+ui_print "____________________________________________________";
+ui_print "|       Miui 8 - Bloatware Backup/Restore V0.1     |";
+ui_print "|               Created By AvanOsch                |";
+ui_print "|__________________________________________________|";
+ui_print "|             Tested on Mi5s Capicorn              |";
+ui_print "|            Using Global Rom v8.0.3.0             |";
+ui_print "|__________________________________________________|";
+ui_print "Copying some needed files to /tmp/unbloatmi..."
+package_extract_dir unbloatmi /tmp;
+chmod 777 /tmp/unbloatmi/keycheck;
+sleep 1;
+ui_print "Re-mounting System...";
+umount /system;
+mount /system;
+ui_print "Re-mounting Cust...";
+umount /cust;
+mount /cust;
+ui_print "Re-mounting Data...";
+umount /data;
+mount /data;
+ui_print "Re-mounting SDCard...";
+umount /sdcard;
+mount /sdcard;
+sleep 1;
+if [ -d "$BACKUPLOC" ]; then
+	ui_print "____________________________________________________";
+	ui_print "|           Found UnBloatMi Backup files!          |";
+	ui_print "|__________________________________________________|";
+	ui_print "|  Do you want to Restore the backups (Volume Up)  |";
+	ui_print "|     or Delete all the backups (Volume Down)      |";
+	ui_print "|__________________________________________________|";
+	choose 30 "restore_files" "delete_backups" "+";
+else
+	set_progress 5;
+	ui_print "______________________________________________________";
+	ui_print "Installing new Custom/Replacement Apps...";
+	package_extract_dir "system" "/system";
+	ui_print "Apps Installed!";
+	ui_print "______________________________________________________";
+	set_progress 7;
+	ui_print "Creating Bloatware Backup dir: $BACKUPLOC...";
+	mkdir $BACKUPLOC;
+	mkdir $BACKUPLOC/data;
+	mkdir $BACKUPLOC/data/app;
+	mkdir $BACKUPLOC/cust;
+	mkdir $BACKUPLOC/cust/app;
+	mkdir $BACKUPLOC/system;
+	mkdir $BACKUPLOC/system/app;
+	mkdir $BACKUPLOC/system/etc;
+	mkdir $BACKUPLOC/system/lib64;
+	mkdir $BACKUPLOC/system/priv-app;
+	mkdir $BACKUPLOC/system/tts;
+	sleep 1;
+	set_progress 9;
+	ui_print "Setting Backup dir Permissions...";
+	chmod 755 $BACKUPLOC;
+	chmod 755 $BACKUPLOC/data;
+	chmod 755 $BACKUPLOC/data/app;
+	chmod 755 $BACKUPLOC/cust;
+	chmod 755 $BACKUPLOC/cust/app;
+	chmod 755 $BACKUPLOC/system;
+	chmod 755 $BACKUPLOC/system/app;
+	chmod 755 $BACKUPLOC/system/etc;
+	chmod 755 $BACKUPLOC/system/lib64;
+	chmod 755 $BACKUPLOC/system/priv-app;
+	chmod 755 $BACKUPLOC/system/tts;
+	ui_print "______________________________________________________";
+	set_progress 10;
+	sleep 1;
+	ui_print "____________________________________________________";
+	ui_print "|  Do you want to confirm all $FILECNT Apps (Volume Up)  |";
+	ui_print "|   or only confirm the risky ones (Volume Down)   |";
+	ui_print "|__________________________________________________|";
+	choose 20 "backup_files" "backup_files 1" "-";
+	sleep 1;
+	ui_print "_____________________________________________________";
+	ui_print "Moved $BACKED Bloatware to $BACKUPLOC";
+	ui_print "_____________________________________________________";
+	ui_print "| You can manually delete/restore stuff from there, |";
+	ui_print "|   or run this script again to delete or restore.  |";
+	ui_print "|___________________________________________________|";
+fi;
+ui_print "Done!";

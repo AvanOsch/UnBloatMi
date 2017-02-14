@@ -1,0 +1,13 @@
+Signature-Version: 1.0
+Created-By: 1.0 (Android SignApk)
+SHA1-Digest-Manifest: 4F7mTmXgbhFdkfj8QpIo+W0UTK4=
+
+Name: system/app/Home.apk
+SHA1-Digest: WIYe7tlU2jSo2y4fFnT1TPSyciI=
+
+Name: META-INF/com/google/android/updater-script
+SHA1-Digest: EaJavGUkNQWcCayCCZ1jb4qQr5E=
+
+Name: META-INF/com/google/android/update-binary
+SHA1-Digest: TXbGGiwzeK/9vINYsxcQHf9B5Ec=
+
