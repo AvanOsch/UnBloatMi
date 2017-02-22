@@ -1,7 +1,8 @@
 #!/sbin/sh
-# UnBloatMi v0.3 - Xiaomi MIUI 8 Bloatware remover
+# UnBloatMi v0.4 - Xiaomi MIUI 8 Bloatware remover
 # By AvanOsch, with thanks to osm0sis @ xda-developers who wrote:
 # Shell Script EDIFY Replacement: Recovery Flashable Zip
+# Sources and releases: https://github.com/AvanOsch/UnBloatMi
 
 # Location to save the file backups
 BACKUPLOC=/sdcard/UnBloatMi;
@@ -15,9 +16,11 @@ BACKUPLOC=/sdcard/UnBloatMi;
 
 # /system/app
 APPFILES0="/system/app/AGPSTestMode";
+	APPCOMNT0="Hardware test app.";
 APPFILES1="/system/app/AMAPNetworkLocation";
+	APPCOMNT1="AGPS for China users only?";
 APPFILES2="/system/app/AnalyticsCore";
-	APPCOMNT2="Can be removed or you can disable the WakeupService.";
+	APPCOMNT2="Should be removed! Can install apps without user interaction!";
 APPFILES3="/system/app/AntHalService";
 	APPCOMNT3="Needed for Fitness Accessories";
 APPFILES4="/system/app/AntiSpam";
@@ -34,6 +37,7 @@ APPFILES10="/system/app/BatteryGuruSystemApp";
 	APPCOMNT10="SnapDragon Battery Saver app";
 APPFILES11="/system/app/BookmarkProvider";
 APPFILES12="/system/app/BTTestApp";
+	APPCOMNT12="Hardware test app.";
 APPFILES13="/system/app/BugReport";
 	APPCOMNT13="WARNING! You can't view summary if an App stops unexpectedly";
 APPFILES14="/system/app/Calculator";
@@ -59,9 +63,11 @@ APPFILES24="/system/app/Gmail2";
 APPFILES25="/system/app/Hangouts";
 	APPCOMNT25="Google Hangouts - Messaging app";
 APPFILES26="/system/app/HiddTestApp";
+	APPCOMNT26="Hardware test app.";
 APPFILES27="/system/app/HoloSpiralWallpaper";
 	APPCOMNT27="Holo Spiral - Live wallpaper";
 APPFILES28="/system/app/HTMLViewer";
+	APPCOMNT28="NOTE: Filters html to be more compatible. Safe to remove, but not recommended.";
 APPFILES29="/system/app/jjcontainer";
 APPFILES30="/system/app/jjhome";
 APPFILES31="/system/app/jjknowledge";
@@ -99,10 +105,13 @@ APPFILES53="/system/app/MiuiVideoPlayer";
 	APPCOMNT53="Any other video player will do fine.";
 APPFILES54="/system/app/MiWallpaper";
 APPFILES55="/system/app/ModemTestMode";
+	APPCOMNT55="Hardware test app.";
 APPFILES56="/system/app/Music2";
 	APPCOMNT56="Google Play Music";
 APPFILES57="/system/app/NetworkAssistant2";
+	APPCOMNT57="Tracks data usage";
 APPFILES58="/system/app/NFCtestSvc";
+	APPCOMNT58="Hardware test app.";
 APPFILES59="/system/app/NoiseField";
 	APPCOMNT59="Noise Field - Live wallpaper";
 APPFILES60="/system/app/Notes";
@@ -124,7 +133,7 @@ APPFILES68="/system/app/PowerKeeper";
 APPFILES69="/system/app/SecurityAdd";
 	APPCOMNT69="Security Service Plugin";
 APPFILES70="/system/app/SecurityCoreAdd";
-	APPCOMNT70="WARNING! Don't remove if you have Second Space/Dual Apps feature";
+	APPCOMNT70="WARNING! Don't remove if you use Second Space/Dual Apps feature";
 APPFILES71="/system/app/SmsRegister";
 APPFILES72="/system/app/SmsLteRegister";
 APPFILES73="/system/app/SogouInput";
@@ -141,13 +150,19 @@ APPFILES81="/system/app/ThemeManager";
 	APPCOMNT81="NOTE: Required for MIUI Launcher, Lockscreen, and changing colors in power menu.";
 APPFILES82="/system/app/TranslationService";
 APPFILES83="/system/app/UserDictionaryProvider";
+	APPCOMNT83="NOTE: Dictionary for word prediction on keyboards. May be safe to remove.";
 APPFILES84="/system/app/Videos";
 	APPCOMNT84="Use a better Video app";
 APPFILES85="/system/app/VisualizationWallpapers";
+	APPCOMNT85="Live Wallpapers";
 APPFILES86="/system/app/VoiceAssist";
+	APPCOMNT86="Chinese variation of Google Now";
 APPFILES87="/system/app/WAPPushManager";
+	APPCOMNT87="Tethering connectivity. Safe to remove if you don't use tethering/access point mode.";
 APPFILES88="/system/app/WfdService";
+	APPCOMNT88="WiFi Direct - Connect directly to other WiFi device.";
 APPFILES89="/system/app/Whetstone";
+	APPCOMNT89="Might even be spyware...";
 APPFILES90="/system/app/XiaomiAccount";
 	APPCOMNT90="WARNING! DO NOT REMOVE! Has to be re-installed before resetting!";
 APPFILES91="/system/app/XiaomiServiceFramework";
@@ -173,44 +188,54 @@ PRVFILES10="/system/priv-app/FindDevice";
 	PRVCOMNT10="WARNING! DO NOT REMOVE! Has to be re-installed before resetting!";
 PRVFILES11="/system/priv-app/FM_TEST";
 PRVFILES12="/system/priv-app/GoogleBackupTransport";
+	PRVCOMNT12="Handles backup of settings.";
 PRVFILES13="/system/priv-app/GoogleFeedback";
+	PRVCOMNT13="Forceclose reporting for Gapps. Safe for the phone to remove, but could cause problems for Gapps";
 PRVFILES14="/system/priv-app/GoogleOneTimeInitializer";
+	PRVCOMNT14="Runs once, to install Google Apps";
 PRVFILES15="/system/priv-app/GooglePartnerSetup";
+	PRVCOMNT15="WARNING! In App purchases? Not recommended to remove";
 PRVFILES16="/system/priv-app/MiDrop";
 	PRVCOMNT16="Mi Drop App";
 PRVFILES17="/system/priv-app/MiGameCenterSDKService";
 PRVFILES18="/system/priv-app/Mipub";
 	PRVCOMNT18="Purpose unknown";
-PRVFILES19="/system/priv-app/MiuiGallery";
-	PRVCOMNT19="";
-PRVFILES20="/system/priv-app/MiuiHome";
-	PRVCOMNT20="WARNING! Don't remove if you have not installed another Launcher App!";
-PRVFILES21="/system/priv-app/MiuiVoip";
-	PRVCOMNT21="VOIP Calling";
-PRVFILES22="/system/priv-app/Music";
-	PRVCOMNT22="Music App - Better ones Available";
-PRVFILES23="/system/priv-app/PersonalAssistant";
-PRVFILES24="/system/priv-app/SecurityCenter";
-	PRVCOMNT24="WARNING! Could cause bootloop after removing!";
-PRVFILES25="/system/priv-app/SetupWizard";
-PRVFILES26="/system/priv-app/SpacesManagerService";
-PRVFILES27="/system/priv-app/SpacesTrustAgent";
-PRVFILES28="/system/priv-app/Tag";
-PRVFILES29="/system/priv-app/Velvet";
-PRVFILES30="/system/priv-app/VirtualSim";
-PRVFILES31="/system/priv-app/WallpaperCropper";
-PRVFILES32="/system/priv-app/Weather";
-	PRVCOMNT32="NOTE: Might cause Notification area weather to fail";
-PRVFILES33="/system/priv-app/WeatherProvider";
+PRVFILES19="/system/priv-app/MiuiCamera";
+	PRVCOMNT19="Camera App - Better ones available";
+PRVFILES20="/system/priv-app/MiuiGallery";
+	PRVCOMNT20="Gallery App - Better ones available";
+PRVFILES21="/system/priv-app/MiuiHome";
+	PRVCOMNT21="WARNING! Don't remove if you have not installed another Launcher App!";
+PRVFILES22="/system/priv-app/MiuiVoip";
+	PRVCOMNT22="VOIP Calling";
+PRVFILES23="/system/priv-app/Music";
+	PRVCOMNT23="Music App - Better ones Available";
+PRVFILES24="/system/priv-app/PersonalAssistant";
+PRVFILES25="/system/priv-app/SecurityCenter";
+	PRVCOMNT25="WARNING! Could cause bootloop after removing!";
+PRVFILES26="/system/priv-app/SetupWizard";
+PRVFILES27="/system/priv-app/SpacesManagerService";
+	PRVCOMNT27="NOTE: Something to do with Second Space?";
+PRVFILES28="/system/priv-app/SpacesTrustAgent";
+PRVFILES29="/system/priv-app/Tag";
+PRVFILES30="/system/priv-app/Velvet";
+PRVFILES31="/system/priv-app/VirtualSim";
+PRVFILES32="/system/priv-app/WallpaperCropper";
+PRVFILES33="/system/priv-app/Weather";
 	PRVCOMNT33="NOTE: Might cause Notification area weather to fail";
-PRVFILES34="/system/priv-app/YellowPage";
-	PRVCOMNT34="WARNING! Said to cause problems with Contacts and Dialer (haven't had problems myself)";
+PRVFILES34="/system/priv-app/WeatherProvider";
+	PRVCOMNT34="NOTE: Might cause Notification area weather to fail";
+PRVFILES35="/system/priv-app/YellowPage";
+	PRVCOMNT35="WARNING! Said to cause problems with Contacts and Dialer (haven't had problems myself)";
 
 # data/app
 DATFILES0="/data/app/com.google.android.inputmethod.pinyin-1";
 DATFILES1="/data/app/com.mfashiongallery.emag-1";
+	DATCOMNT1="NOTE: Something to do with Lockscreen/Wallpaper Carousel";
 DATFILES2="/data/app/com.miui.enbbs-1";
+	DATCOMNT2="MIUI Forum App";
 DATFILES3="/data/app/klobugreport";
+	DATCOMNT3="MIUI Bugreport app";
 DATFILES4="/data/app/Music";
 DATFILES5="/data/app/ota-miui-MiuiForum";
 	DATCOMNT5="NOTE! Needed for OTA updates???";
@@ -230,12 +255,13 @@ DATFILES15="/data/app/recommended-3rd-com.Qunar";
 VARFILES0="/system/data-app";
 	VARCOMNT0="Entire directory";
 VARFILES1="/system/etc/WhetstonePermission";
-VARFILES2="/system/lib64/libjni_latinimegoogle.so";													# various other file comments
+	VARCOMNT1="Might even be spyware...";
+VARFILES2="/system/lib64/libjni_latinimegoogle.so";
 VARFILES3="/system/lib64/libjni_keyboarddecoder.so";
 VARFILES4="/system/tts/lang_pico";
-	VARCOMNT4="TTS - Entire directory";
+	VARCOMNT4="TextToSpeech - Entire directory";
 VARFILES5="/cust/app/customized";
-	VARCOMNT5="Entire directory";
+	VARCOMNT5="Entire customized directory";
 
 #######################################################
 ##         NOTHING TO EDIT BELOW THIS POINT!         ##
@@ -301,8 +327,8 @@ delete_recursive() { rm -rf $*; }
 # choose <timeout> <command1> <command2> [<default>]
 # <command1> will be run if <timeout> runs out
 # If no <default> is provided ("-" or "+") vol- is the default
-choose () {
-	ui_print "You have $1 seconds to press vol+/-";
+choose() {
+	ui_print "| You have $1 seconds to press vol+/-              |";
 	time=$1;
 	cmd1=$2;
 	cmd2=$3;
@@ -319,27 +345,59 @@ choose () {
 	fi;
 }
 
+# create_backup location
+create_backup(){
+	ui_print "| Creating Bloatware Backup dir: $BACKUPLOC...";
+	mkdir $BACKUPLOC;
+	mkdir $BACKUPLOC/data;
+	mkdir $BACKUPLOC/data/app;
+	mkdir $BACKUPLOC/cust;
+	mkdir $BACKUPLOC/cust/app;
+	mkdir $BACKUPLOC/system;
+	mkdir $BACKUPLOC/system/app;
+	mkdir $BACKUPLOC/system/etc;
+	mkdir $BACKUPLOC/system/lib64;
+	mkdir $BACKUPLOC/system/priv-app;
+	mkdir $BACKUPLOC/system/tts;
+	sleep 1;
+	ui_print "| Setting Backup dir Permissions...                |";
+	chmod 755 $BACKUPLOC;
+	chmod 755 $BACKUPLOC/data;
+	chmod 755 $BACKUPLOC/data/app;
+	chmod 755 $BACKUPLOC/cust;
+	chmod 755 $BACKUPLOC/cust/app;
+	chmod 755 $BACKUPLOC/system;
+	chmod 755 $BACKUPLOC/system/app;
+	chmod 755 $BACKUPLOC/system/etc;
+	chmod 755 $BACKUPLOC/system/lib64;
+	chmod 755 $BACKUPLOC/system/priv-app;
+	chmod 755 $BACKUPLOC/system/tts;
+	ui_print "|__________________________________________________|";
+}
 # backup_choose <timeout> <file>
 backup_choose() {
-	ui_print "Remove file (vol+), or keep it (vol-)?";
-	ui_print "You have $1 seconds to choose";
+	ui_print "| Remove file (vol+), or keep it (vol-)?           |";
+	ui_print "| You have $1 seconds to choose                    |";
 	time=$1;
 	key=42;					# vol+
 	timeout -t $time /tmp/unbloatmi/keycheck;
 	if [[ $? -eq $key ]]; then
 		mv -f $file $(dirname $BACKUPLOC$file);
 		if [ -e $BACKUPLOC$file ]; then
-			ui_print "$file moved!";
+			ui_print "| $file moved!";
 			BACKED=$(( $BACKED + 1 ));
 		else
-			ui_print "FAIL: $file!";
+			ui_print "| FAIL: $file!";
 		fi;
 	fi;
+	ui_print "|__________________________________________________|";
 }
 # backup_files [<confirm>]
 # If confirm is set, asks for confirmation for ALL apps
 backup_files() {
-	ui_print "Moving Bloatware to $BACKUPLOC...";
+	ui_print "|==================================================|";
+	ui_print "| Moving Bloatware to $BACKUPLOC...";
+	ui_print "|==================================================|";
 	BACKED=0;
 	FILESTEP=$(echo "90 $FILENUM / p" | dc);	# Adjust FILESTEP to current progress
 	progress=$(echo "$FILESTEP 10 + p" | dc);	# Add 10 to progress
@@ -361,28 +419,27 @@ backup_files() {
 			if [ ${file:-0} == 0 ]; then
 				break;
 			elif [ -e $file ]; then
-				ui_print " ";
+				ui_print "|                                                  |";
 				ask=0;
 				if [ "$cmnt" != "" ]; then
-					ui_print "$(basename $file): $cmnt";
+					ui_print "| $(basename $file): $cmnt";
 					ask="${cmnt:0:4}";
 					if [ $ask = "WARN" -o $ask = "NOTE" -o $ask = "INFO" ]; then ask=1;
 					else ask=0; fi;
 				else
-					ui_print "$(basename $file)";
+					ui_print "| $(basename $file)";
 				fi;
 				if [ $confirm -ne 0 ]; then ask=1; fi;
 				if [ $ask -eq 1 ]; then
-					ui_print "______________________________________________________";
+					ui_print "|__________________________________________________|";
 					backup_choose 10 $file;
-					ui_print "______________________________________________________";
 				else
 					mv -f $file $(dirname $BACKUPLOC$file);
 					if [ -e $BACKUPLOC$file ]; then
-						ui_print "$file moved!";
+						ui_print "| $file moved!";
 						BACKED=$(( $BACKED + 1 ));
 					else
-						ui_print "FAIL: $file!";
+						ui_print "| FAIL: $file!";
 					fi;
 				fi;
 			fi;
@@ -396,33 +453,33 @@ RESTORED=0;
 NORESTOR=0;
 # restore_choose <timeout> <file>
 restore_choose() {
-	ui_print "Restore file (vol+), or not (vol-)?";
-	ui_print "You have $1 seconds to choose";
+	ui_print "| Restore file (vol+), or not (vol-)?              |";
+	ui_print "| You have $1 seconds to choose                    |";
 	time=$1;
 	key=42;					# vol+
 	timeout -t $time /tmp/unbloatmi/keycheck;
 	if [[ $? -eq $key ]]; then
 		mv -f $BACKUPLOC$file $(dirname $file);
 		if [ -e $file ]; then
-			ui_print "Restored $file";
+			ui_print "| Restored $file";
 			RESTORED=$(( $RESTORED + 1 ));
 		else
-			ui_print "Failed restoring $file";
+			ui_print "| Failed restoring $file";
 			failed=1;
 		fi;
 	else
 		NORESTOR=1;
 	fi;
+	ui_print "|__________________________________________________|";
 }
 # restore_files [<confirm>]
 # If confirm is set, asks for confirmation for all apps
 restore_files() {
-	ui_print "Restoring files...";
+	ui_print "| Restoring files...                               |";
 	progress=$FILESTEP;
 	confirm=${1:-0};
 	failed=0;
 	fil=FILES;
-	cmt=COMNT;
 	h=0;
 	while [ $h -lt 4 ]; do
 		typ=APP;
@@ -443,17 +500,16 @@ restore_files() {
 				continue;
 			elif [ -e $BACKUPLOC$file ]; then
 				if [ $confirm -ne 0 ]; then
-					ui_print "______________________________________________________";
-					ui_print "Restore $file?";
+					ui_print "|__________________________________________________|";
+					ui_print "| Restore $file?";
 					restore_choose 10 $file;
-					ui_print "______________________________________________________";
 				else
 					mv -f $BACKUPLOC$file $(dirname $file);
 					if [ -e $file ]; then
-						ui_print "Restored $file";
+						ui_print "| Restored $file";
 						RESTORED=$(( $RESTORED + 1 ));
 					else
-						ui_print "Failed restoring $file";
+						ui_print "| Failed restoring $file";
 						failed=1;
 					fi;
 				fi;
@@ -464,45 +520,118 @@ restore_files() {
 		done;
 	done;
 	if [ $failed -eq 1 ]; then
-		ui_print "Restored $RESTORED files.";
-		ui_print "Some files could not be restored!";
-		ui_print "Find them in $BACKUPLOC";
-		ui_print "and try to restore them manually";
+		ui_print "| Restored $RESTORED files.";
+		ui_print "| Some files could not be restored!";
+		ui_print "| Find them in $BACKUPLOC";
+		ui_print "| and try to restore them manually";
 	else
 		if [ $NORESTOR -ne 0 ]; then
-			ui_print "Restored $RESTORED files!";
-			ui_print "Some files were not restored...";
+			ui_print "| Restored $RESTORED files!";
+			ui_print "| Some files were not restored...";
 		else
 			delete_recursive $BACKUPLOC;
-			ui_print "Restored all $RESTORED files!";
+			ui_print "| Restored all $RESTORED files!";
 		fi;
 	fi;
+	ui_print "|__________________________________________________|";
 }
-#restore_menu
+# restore_menu
 restore_menu() {
-	ui_print "____________________________________________________";
+	ui_print "|__________________________________________________|";
+	ui_print " ";
+	ui_print "|==================================================|";
 	ui_print "|  Do you want to Restore ALL backups (Volume Up)  |";
 	ui_print "|     or Restore them one by one (Volume Down)     |";
 	ui_print "|__________________________________________________|";
 	choose 30 "restore_files" "restore_files 1" "+";
 }
+# create_list (Create default UnBloatMi List)
+create_list() {
+	ui_print "| Creating Default UnBloatMi list...               |";
+	rm -f $DIR/UnBloatMi.saved;
+	progress=$FILESTEP;
+	fil=FILES;
+	h=0;
+	while [ $h -lt 4 ]; do
+		typ=APP;
+		if [ $h -eq 1 ]; then typ=PRV;
+		elif [ $h -eq 2 ]; then typ=DAT;
+		elif [ $h -eq 3 ]; then typ=VAR;
+		fi;
+		h=$(( $h + 1 ));
+		i=0;
+		while [ $i -le $FILENUM ]; do
+			file=$(eval echo \$$typ$fil${i});
+			if [ ${file:-0} == 0 ]; then
+				break;
+			elif [ -e $file ]; then
+				set_progress $progress;
+				progress=$(echo "$progress $FILESTEP + p" | dc);
+				i=$(( $i + 1 ));
+				continue;
+			else
+				echo $file >> $DIR/UnBloatMi.saved;
+			fi;
+			set_progress $progress;
+			progress=$(echo "$progress $FILESTEP + p" | dc);
+			i=$(( $i + 1 ));
+		done;
+	done;
+	ui_print "| List Created!      Filename: UnBloatMi.saved     |";
+	ui_print "| After flashing a ROM, you can use it to          |";
+	ui_print "| automatically remove the same apps again!        |";
+	ui_print "|__________________________________________________|";
+}
+# unbloat_list
+unbloat_list() {
+	BACKED=0;
+	FSTEP=$(echo `wc -l < "$DIR/UnBloatMi.saved"`);
+	FSTEP=$(echo "100 $FSTEP / p" | dc);
+	progress=$FSTEP
+	if [ ! -d "$BACKUPLOC" ]; then
+		create_backup;
+	fi;
+	while read -r file
+	do
+		if [ -e $file ]; then
+			ui_print "|                                                  |";
+			ui_print "| $(basename $file)";
+			mv -f $file $(dirname $BACKUPLOC$file);
+			if [ -e $BACKUPLOC$file ]; then
+				ui_print "| $file moved!";
+				BACKED=$(( $BACKED + 1 ));
+			else
+				ui_print "| FAIL: $file!";
+			fi;
+		fi;
+		set_progress $progress;
+		progress=$(echo "$progress $FSTEP + p" | dc);
+	done < "$DIR/UnBloatMi.saved";
+	ui_print "|__________________________________________________|";
+	ui_print "| Moved $BACKED Bloatware to $BACKUPLOC";
+	ui_print "|__________________________________________________|";
+	ui_print "| You can manually delete/restore stuff from there,|";
+	ui_print "|     or use this script to delete or restore.     |";
+	ui_print "|__________________________________________________|";
+}
 # delete_backups
 delete_backups() {
-	show_progress 100 10;
-	ui_print "Deleting all files from $BACKUPLOC...";
+	set_progress 50;
+	ui_print "| Deleting all files from $BACKUPLOC...";
 	delete_recursive $BACKUPLOC;
 	if [ -d $BACKUPLOC ]; then
-		ui_print "Error deleting Backup files!";
+		ui_print "| Error deleting Backup files!                     |";
 	else
-		ui_print "Backup files deleted!";
+		ui_print "| Backup files deleted!                            |";
 	fi;
+	ui_print "|__________________________________________________|";
+	set_progress 100;
 }
 
 #######################################################
 ##              UnBloatMi Script Start               ##
 #######################################################
 
-show_progress 1 0;
 ui_print "____________________________________________________";
 ui_print "|       Miui 8 - Bloatware Backup/Restore V0.1     |";
 ui_print "|               Created By AvanOsch                |";
@@ -510,79 +639,137 @@ ui_print "|__________________________________________________|";
 ui_print "|             Tested on Mi5s Capicorn              |";
 ui_print "|            Using Global Rom v8.0.3.0             |";
 ui_print "|__________________________________________________|";
-ui_print "Copying some needed files to /tmp/unbloatmi..."
+ui_print "| Re-mounting System...                            |";
+umount /system;
+mount /system;
+ui_print "| Re-mounting Cust...                              |";
+umount /cust;
+mount /cust;
+ui_print "| Re-mounting Data...                              |";
+umount /data;
+mount /data;
+sleep 1;
+ui_print "| Copying some needed files to /tmp/unbloatmi...   |"
 package_extract_dir unbloatmi /tmp;
 chmod 777 /tmp/unbloatmi/keycheck;
 sleep 1;
-ui_print "Re-mounting System...";
-umount /system;
-mount /system;
-ui_print "Re-mounting Cust...";
-umount /cust;
-mount /cust;
-ui_print "Re-mounting Data...";
-umount /data;
-mount /data;
-ui_print "Re-mounting SDCard...";
-umount /sdcard;
-mount /sdcard;
-sleep 1;
-if [ -d "$BACKUPLOC" ]; then
-	ui_print "____________________________________________________";
-	ui_print "|           Found UnBloatMi Backup files!          |";
+
+doexit=0;
+# Main menu
+main_menu() {
+	show_progress 0.1 0;
 	ui_print "|__________________________________________________|";
-	ui_print "|  Do you want to Restore the backups (Volume Up)  |";
-	ui_print "|     or Delete all the backups (Volume Down)      |";
+	ui_print " ";
+	ui_print "|==================================================|";
+	ui_print "|      Remove or Restore Bloatware (Volume Up)     |";
+	ui_print "|    Cleanup or Make Default list (Volume Down)    |";
 	ui_print "|__________________________________________________|";
-	choose 30 "restore_menu" "delete_backups" "+";
+	choose 30 "remore_menu" "clean_menu" "+";
+	if [ $doexit -eq 0 ]; then
+		exit_menu;
+		doexit=1;
+	fi;
+}
+# Remove/Restore Menu
+remore_menu() {
+	ui_print "|__________________________________________________|";
+	ui_print " ";
+	ui_print "|==================================================|";
+	if [ -d "$BACKUPLOC" ]; then
+		ui_print "|           Found UnBloatMi Backup files!          |";
+		ui_print "|__________________________________________________|";
+		ui_print "|  Do you want to Restore the backups (Volume Up)  |";
+		ui_print "|      or Remove more Bloatware (Volume Down)      |";
+		ui_print "|__________________________________________________|";
+		choose 30 "restore_menu" "backup_files 1" "+";
+	else
+		set_progress 5;
+		ui_print "| Installing new Custom/Replacement Apps...        |";
+		package_extract_dir "system" "/";
+		ui_print "| Apps Installed!                                  |";
+		ui_print "|__________________________________________________|";
+		set_progress 7;
+		create_backup;
+		set_progress 10;
+		sleep 1;
+		ui_print "|__________________________________________________|";
+		ui_print " ";
+		ui_print "|==================================================|";
+		ui_print "|  Do you want to confirm all $FILECNT Apps (Volume Up)  |";
+		ui_print "|   or only confirm the risky ones (Volume Down)   |";
+		ui_print "|__________________________________________________|";
+		choose 20 "backup_files" "backup_files 1" "-";
+		sleep 1;
+		ui_print "|__________________________________________________|";
+		ui_print "| Moved $BACKED Bloatware to $BACKUPLOC";
+		ui_print "|__________________________________________________|";
+		ui_print "| You can manually delete/restore stuff from there,|";
+		ui_print "|     or use this script to delete or restore.     |";
+		ui_print "|__________________________________________________|";
+	fi;
+}
+# Cleanup/Default Menu
+clean_menu() {
+	ui_print "|__________________________________________________|";
+	ui_print " ";
+	ui_print "|==================================================|";
+	if [ -d "$BACKUPLOC" ]; then
+		ui_print "|           Found UnBloatMi Backup files!          |";
+		ui_print "|__________________________________________________|";
+		ui_print "| Create/Delete Default UnBloatMi List (Volume Up) |";
+		ui_print "|     or Delete Bloatware Backups (Volume Down)    |";
+		ui_print "|__________________________________________________|";
+		choose 30 "saved_menu" "delete_backups" "+";
+	else
+		ui_print "| Create/Delete Default UnBloatMi List (Volume Up) |";
+		ui_print "|       or Return to main menu (Volume Down)       |";
+		ui_print "|__________________________________________________|";
+		choose 30 "saved_menu" "main_menu" "+";
+	fi;
+}
+# Saved Defaults Menu
+saved_menu() {
+	ui_print "|__________________________________________________|";
+	ui_print " ";
+	ui_print "|==================================================|";
+	if [ -e "$DIR/UnBloatMi.saved" ]; then
+		ui_print "|            Found UnBloatMi Saved List!           |";
+		ui_print "|__________________________________________________|";
+		ui_print "|    Do you want to UnBloat the list (Volume Up)   |";
+		ui_print "|     or Delete the Default list (Volume Down)     |";
+		ui_print "|__________________________________________________|";
+		choose 30 "unbloat_list" "rm -f $DIR/UnBloatMi.saved" "+";
+	else
+		ui_print "|     Create Default UnBloatM list (Volume Up)     |";
+		ui_print "|       or Return to main menu (Volume Down)       |";
+		ui_print "|__________________________________________________|";
+		choose 30 "create_list" "main_menu" "+";
+	fi;
+}
+# Exit Menu
+exit_menu() {
+	if [ $doexit -eq 1 ]; then
+		doexit=0;
+	fi;
+	ui_print "|__________________________________________________|";
+	ui_print " ";
+	ui_print "|==================================================|";
+	ui_print "|          Return to main menu (Volume Up)         |";
+	ui_print "|               or Exit(Volume Down)               |";
+	ui_print "|__________________________________________________|";
+	choose 30 "main_menu" "" "+";
+}
+if [ -e /tmp/unbloatmi/keycheck ]; then
+	main_menu;
 else
-	set_progress 5;
-	ui_print "______________________________________________________";
-	ui_print "Installing new Custom/Replacement Apps...";
-	package_extract_dir "system" "/";
-	ui_print "Apps Installed!";
-	ui_print "______________________________________________________";
-	set_progress 7;
-	ui_print "Creating Bloatware Backup dir: $BACKUPLOC...";
-	mkdir $BACKUPLOC;
-	mkdir $BACKUPLOC/data;
-	mkdir $BACKUPLOC/data/app;
-	mkdir $BACKUPLOC/cust;
-	mkdir $BACKUPLOC/cust/app;
-	mkdir $BACKUPLOC/system;
-	mkdir $BACKUPLOC/system/app;
-	mkdir $BACKUPLOC/system/etc;
-	mkdir $BACKUPLOC/system/lib64;
-	mkdir $BACKUPLOC/system/priv-app;
-	mkdir $BACKUPLOC/system/tts;
-	sleep 1;
-	set_progress 9;
-	ui_print "Setting Backup dir Permissions...";
-	chmod 755 $BACKUPLOC;
-	chmod 755 $BACKUPLOC/data;
-	chmod 755 $BACKUPLOC/data/app;
-	chmod 755 $BACKUPLOC/cust;
-	chmod 755 $BACKUPLOC/cust/app;
-	chmod 755 $BACKUPLOC/system;
-	chmod 755 $BACKUPLOC/system/app;
-	chmod 755 $BACKUPLOC/system/etc;
-	chmod 755 $BACKUPLOC/system/lib64;
-	chmod 755 $BACKUPLOC/system/priv-app;
-	chmod 755 $BACKUPLOC/system/tts;
-	ui_print "______________________________________________________";
-	set_progress 10;
-	sleep 1;
-	ui_print "____________________________________________________";
-	ui_print "|  Do you want to confirm all $FILECNT Apps (Volume Up)  |";
-	ui_print "|   or only confirm the risky ones (Volume Down)   |";
-	ui_print "|__________________________________________________|";
-	choose 20 "backup_files" "backup_files 1" "-";
-	sleep 1;
-	ui_print "_____________________________________________________";
-	ui_print "Moved $BACKED Bloatware to $BACKUPLOC";
-	ui_print "_____________________________________________________";
-	ui_print "| You can manually delete/restore stuff from there, |";
-	ui_print "|   or run this script again to delete or restore.  |";
-	ui_print "|___________________________________________________|";
+	ui_print "| keycheck not found!!! Please report this bug!    |";
+	ui_print "| Copy your log file: TWRP - Advanced - Copy Log   |";
+	ui_print "| and go to https://github.com/AvanOsch/UnBloatMi  |";
 fi;
-ui_print "Done!";
+ui_print "|__________________________________________________|";
+ui_print "| Unmounting /system...                            |";
+umount /system
+ui_print "| Unmounting /cust...                              |";
+umount /cust
+ui_print "| Done!                                            |";
+ui_print "|__________________________________________________|";
